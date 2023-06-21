@@ -50,13 +50,13 @@
         \item Membership status of the rider (Member or Non-member?)
     \end{itemize}
 
-These data are available as csv files per month or year from Capital Bikeshare at https://ride.capitalbikeshare.com/system-data
+    These data are available as csv files per month or year from Capital Bikeshare at https://ride.capitalbikeshare.com/system-data
 \end{frame}
 
 \begin{frame}
     \frametitle{My goal}
 
-    
+
 \end{frame}
 
 \section{Methodology}
@@ -64,27 +64,51 @@ These data are available as csv files per month or year from Capital Bikeshare a
     \frametitle{Removing invalid trips}
     % sankey diagram?
     \section{What makes a trip invalid?}
-    
+
     Longer than a 4 hours
 
-    This is an arbitrary threshold. However, the CaBi system is primarily intended for short trips, and the pricing reflects this. The bikes can be used for leisure and tourism, but they are priced to encourage users to change bikes regularly. Also, for the purposes of this project, long trips are less likely to have 
+    This is an arbitrary threshold. However, the CaBi system is primarily intended for short trips, and the pricing reflects this. The bikes can be used for leisure and tourism, but they are priced to encourage users to change bikes regularly. Also, for the purposes of this project, long trips are less likely to have
 
 
-    Starting and ending at the same station 
+    Starting and ending at the same station
 
     For obvious reasons, cannot easily be routed
-a
+
     Stations with an invalid start or end station
 
-    
+    A number of trips in the dataset are missing a value for the start or ending point
 
-
-    
 \end{frame}
 
 \begin{frame}
-    \frametitle{Conclusion}
-    This is the conclusion slide.
+    \frametitle{Find unique trips between two stations}
+
 \end{frame}
 
+\begin{frame}
+    \frametitle{Building a Valhalla Routing network}
+
+    \begin{itemize}
+        \item Download OSM tiles
+        \item Build Valhalla routing network
+        \item Use Pandas the start and end point of every unique trip
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Build PostGIS topology at the same time}
+    \begin{itemize}
+        \item Using PLpgSQL triggers, add a corresponding entry to the topogeometry table for every new entry to the routes tables
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sum up the trips on every topological element}
+
+    
+\begin{itemize}
+    \item Using an SQL query, we can sum the trips on every unique street 
+\end{itemize}
+
+\end{frame}
 \end{document}
