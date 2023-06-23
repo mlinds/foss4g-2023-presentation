@@ -1,6 +1,6 @@
 \documentclass{beamer}
 % Choose your desired theme
-\usetheme{Boadilla}
+% \usetheme{Boadilla}
 \usepackage[style=numeric]{biblatex}
 
 \addbibresource{./cabi.bib}
@@ -59,29 +59,48 @@
     \begin{itemize}
         \item Analyze all trips up to the present day
         \item Street-level estimates of bikeshare use
-        \item Inspired by A blog post from Daniel J patterson from 2020 
+        \item Inspired by A blog post from Daniel J patterson from 2020
     \end{itemize}
 
 \end{frame}
 
 \section{Methodology}
 \begin{frame}
-    \frametitle{Removing invalid trips}
+    \frametitle{Overview of my approach}
+    \begin{enumerate}
+        \item Download CSVs of every trip
+        \item Parse and normalize the CSVs using Pandas
+        \item Find The number of trips between unique pairs of stations
+        \item Build Valhalla routing tiles 
+        \item Find a route between each station pair using Valhalla
+        \item Aggregate the trip statistics across every single route
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Parse and normalize the CSVs using Pandas}
     % sankey diagram?
-    \section{What makes a trip invalid?}
-
-    Longer than a 4 hours
-
+    
+\begin{itemize}
+    \item Longer than a 4 hours
+    
     This is an arbitrary threshold. However, the CaBi system is primarily intended for short trips, and the pricing reflects this. The bikes can be used for leisure and tourism, but they are priced to encourage users to change bikes regularly. Also, for the purposes of this project, long trips are less likely to have
 
-
-    Starting and ending at the same station
-
+    \item Starting and ending at the same station
+    
     For obvious reasons, cannot easily be routed
 
-    Stations with an invalid start or end station
+    \item Stations with an invalid start or end station
 
     A number of trips in the dataset are missing a value for the start or ending point
+\end{itemize}
+    
+
+
+
+    
+
+   
 
 \end{frame}
 
@@ -110,10 +129,10 @@
 \begin{frame}
     \frametitle{Sum up the trips on every topological element}
 
-    
-\begin{itemize}
-    \item Using an SQL query, we can sum the trips on every unique street 
-\end{itemize}
+
+    \begin{itemize}
+        \item Using an SQL query, we can sum the trips on every unique street
+    \end{itemize}
 
 \end{frame}
 
@@ -126,7 +145,7 @@
         \item Valhalla allows a like of parameters for bike routing and is lightning fast
     \end{itemize}
 
-    
+
 
 \end{frame}
 \section{notes and thanks}
@@ -135,10 +154,10 @@
 
     \begin{itemize}
         \item GIS-OPS for their thoughtful and intuitive Valhalla Docker containers
-        \item 
+        \item
     \end{itemize}
 
-    
+
 
 \end{frame}
 \end{document}
