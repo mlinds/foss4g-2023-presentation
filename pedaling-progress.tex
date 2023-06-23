@@ -56,6 +56,11 @@
 \begin{frame}
     \frametitle{My goal}
 
+    \begin{itemize}
+        \item Analyze all trips up to the present day
+        \item Street-level estimates of bikeshare use
+        \item Inspired by A blog post from Daniel J patterson from 2020 
+    \end{itemize}
 
 \end{frame}
 
@@ -109,6 +114,31 @@
 \begin{itemize}
     \item Using an SQL query, we can sum the trips on every unique street 
 \end{itemize}
+
+\end{frame}
+
+\section{Conclusions}
+\begin{frame}
+    \frametitle{Lessons learned}
+
+    \begin{itemize}
+        \item Routing is *much* faster if you run it locally as binaries rather than a web api from a container
+        \item Valhalla allows a like of parameters for bike routing and is lightning fast
+    \end{itemize}
+
+    
+
+\end{frame}
+\section{notes and thanks}
+\begin{frame}
+    \frametitle{Shoutouts}
+
+    \begin{itemize}
+        \item GIS-OPS for their thoughtful and intuitive Valhalla Docker containers
+        \item 
+    \end{itemize}
+
+    
 
 \end{frame}
 \end{document}
