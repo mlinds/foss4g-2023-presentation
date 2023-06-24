@@ -19,7 +19,7 @@
 \section{Introduction}
 \begin{frame}
     % consider splitting into a few slides with more pictures
-    \frametitle{Introduction to CaBi}
+    \frametitle{Introduction to Capital Bikeshare (Aka CaBi)}
     \begin{columns}
         \column{0.5\textwidth}
         \begin{figure}
@@ -72,41 +72,58 @@
         \item Download CSVs of every trip
         \item Parse and normalize the CSVs using Pandas
         \item Find The number of trips between unique pairs of stations
-        \item Build Valhalla routing tiles 
+        \item Build Valhalla routing tiles
         \item Find a route between each station pair using Valhalla
         \item Aggregate the trip statistics across every single route
     \end{enumerate}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Download CSVs of every trip}
-
-
+    \frametitle{1. Download CSVs of every trip}
+    The raw CSV files are available from the Capital Bikeshare Data portal. This is a small example what the data looks like
+    \begin{table}[]
+        \begin{tabular}{lllllllllllll}
+            \hline
+            \multicolumn{1}{|l|}{ride\_id} & \multicolumn{1}{l|}{rideable\_type} & \multicolumn{1}{l|}{started\_at} & \multicolumn{1}{l|}{ended\_at} & \multicolumn{1}{l|}{start\_station\_name} & \multicolumn{1}{l|}{start\_station\_id} & \multicolumn{1}{l|}{end\_station\_name} & \multicolumn{1}{l|}{end\_station\_id} & \multicolumn{1}{l|}{start\_lat} & \multicolumn{1}{l|}{start\_lng} & \multicolumn{1}{l|}{end\_lat} & \multicolumn{1}{l|}{end\_lng} & \multicolumn{1}{l|}{member\_casual} \\ \hline
+            5F3D280238A782FE               & docked\_bike                        & 2023-05-12 18:57:59              & 2023-05-12 19:17:50            & 3rd \& Tingey St SE                       & 31634                                   & 8th \& F St NE                          & 31631                                 & 38.87501                        & -77.0024                        & 38.897274                     & -76.994749                    & casual                              \\
+            97EC218DACB24849               & classic\_bike                       & 2023-05-23 07:55:29              & 2023-05-23 08:11:12            & Clarendon Blvd \& Pierce St               & 31016                                   & 15th \& L St NW                         & 31276                                 & 38.893438                       & -77.076389                      & 38.903649                     & -77.034918                    & member                              \\
+            31D19AC7BA317018               & electric\_bike                      & 2023-05-05 17:27:10              & 2023-05-05 17:40:17            & South Capitol St and Southern Ave SE      & 31830                                   & Tanger Outlets                          & 32415                                 & 38.821667433                    & -77.001627445                   & 38.7968                       & -77.0026                      & member
+        \end{tabular}
+    \end{table}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Parse and normalize the CSVs using Pandas}
-    % sankey diagram?
+    \frametitle{2. Parse and normalize the CSVs using Pandas}
     
-\begin{itemize}
-    \item Longer than a 4 hours
+    For each trip, the trip time is calculated. 
     
-    This is an arbitrary threshold. However, the CaBi system is primarily intended for short trips, and the pricing reflects this. The bikes can be used for leisure and tourism, but they are priced to encourage users to change bikes regularly. Also, for the purposes of this project, long trips are less likely to have
+    Then invalid trips are removed based on the following criteria: 
+    \begin{itemize}
+        \item Longer than a 4 hours
 
-    \item Starting and ending at the same station
-    
-    For obvious reasons, cannot easily be routed
+        % This is an arbitrary threshold. However, the CaBi system is primarily intended for short trips, and the pricing reflects this. The bikes can be used for leisure and tourism, but they are priced to encourage users to change bikes regularly. Also, for the purposes of this project, long trips are less likely to have
 
-    \item Stations with an invalid start or end station
+        \item Starting and ending at the same station
 
-    A number of trips in the dataset are missing a value for the start or ending point
-\end{itemize}
-    
+        % For obvious reasons, cannot easily be routed
+
+        \item Stations with an invalid start or end station
+
+        % A number of trips in the dataset are missing a value for the start or ending point
+    \end{itemize}
+
+    As of May 2023 there are 35,231,413 trips. 175,603 are removed due to being too long
 \end{frame}
 
 \begin{frame}
     \frametitle{Find unique trips between two stations}
+    These 35,136,810 trips reduce to 183,959 unique trips if we consider A>B and B>A different trips.
 
+    
+
+    If we drop trips that start and end at the same dock, there are 183,214 unique trips. If we consider only the start and end stations, this further reduces to 105,636.
+
+    \emph{These trips are the final ones to route}
 \end{frame}
 
 \begin{frame}
@@ -129,13 +146,20 @@
 \begin{frame}
     \frametitle{Sum up the trips on every topological element}
 
-
     \begin{itemize}
         \item Using an SQL query, we can sum the trips on every unique street
     \end{itemize}
 
 \end{frame}
 
+\begin{frame}
+    \frametitle{Results}
+
+    
+
+    
+
+\end{frame}
 \section{Conclusions}
 \begin{frame}
     \frametitle{Lessons learned}
