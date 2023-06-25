@@ -1,8 +1,18 @@
 \documentclass{beamer}
-% Choose your desired theme
-% \usetheme{Boadilla}
 \usepackage[style=numeric]{biblatex}
 \usepackage{listings}
+\usepackage{inter}
+
+% set up coloring
+\usepackage{xcolor}
+\definecolor{kosovoorange}{RGB}{237, 93, 93}
+\definecolor{kosovoblue}{RGB}{0, 73, 255}
+
+% beamer setup
+% Choose your desired theme
+\usetheme{Antibes}
+% use color defined above
+\usecolortheme[named=kosovoblue]{structure}
 
 \addbibresource{./cabi.bib}
 \title{Pedaling Towards Progress}
@@ -10,13 +20,15 @@
 \author{Maxwell Lindsay}
 \institute{Van Oord}
 \date{\today}
-
+\titlegraphic{\includegraphics[height=.3\textheight]{./FOSS4G 2023 - Logo Main.png}}
 \begin{document}
 
 \begin{frame}
+    % \includegraphics{./FOSS4G 2023 - Logo Main.png}
     \titlepage
 \end{frame}
 \section{Introduction}
+
 \begin{frame}
     % consider splitting into a few slides with more pictures
     \frametitle{Introduction to Capital Bikeshare (Aka CaBi)}
@@ -33,16 +45,48 @@
             \item Docked bikeshare
             \item 700+ docks, ~35 million trips (so far)
         \end{itemize}
-
+        
     \end{columns}
     \small{* recently, non-docked E-bikes that have been introduced}
 \end{frame}
 
 \begin{frame}
+    \includegraphics[width=\textwidth,page=1]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=2]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=3]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=4]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=5]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=6]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=7]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=8]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=9]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \includegraphics[width=\textwidth,page=10]{graphics_document.pdf}
+\end{frame}
+
+
+\begin{frame}
     \frametitle{The data}
-
+    
     Capital Bikeshare publishes the following data about each trip on a monthly basis:
-
+    
     \begin{itemize}
         \item start time
         \item end time
@@ -50,22 +94,23 @@
         \item end station index
         \item Membership status of the rider (Member or Non-member?)
     \end{itemize}
-
+    
     These data are available as csv files per month or year from Capital Bikeshare at https://ride.capitalbikeshare.com/system-data
 \end{frame}
 
 \begin{frame}
     \frametitle{My goal}
-
+    
     \begin{itemize}
         \item Analyze all trips up to the present day
         \item Street-level estimates of bikeshare use
         \item Inspired by A blog post from Daniel J patterson from 2020
     \end{itemize}
-
+    
 \end{frame}
 
 \section{Methodology}
+
 \begin{frame}
     \frametitle{Overview of my approach}
     \begin{enumerate}
@@ -77,9 +122,11 @@
         \item Aggregate the trip statistics across every single route
     \end{enumerate}
 \end{frame}
+\subsection{Download CSVs of every trip}
 
 \begin{frame}
-    \frametitle{1. Download CSVs of every trip}
+    \frametitle{Example data}
+    % TODO fix this mess
     The raw CSV files are available from the Capital Bikeshare Data portal. This is a small example what the data looks like
     \begin{table}[]
         \begin{tabular}{lllllllllllll}
@@ -92,43 +139,40 @@
     \end{table}
 \end{frame}
 
+\subsection{Parse and normalize the CSVs using Pandas}
+
 \begin{frame}
-    \frametitle{2. Parse and normalize the CSVs using Pandas}
-    
     For each trip, the trip time is calculated. 
-    
     Then invalid trips are removed based on the following criteria: 
     \begin{itemize}
         \item Longer than a 4 hours
-
-        % This is an arbitrary threshold. However, the CaBi system is primarily intended for short trips, and the pricing reflects this. The bikes can be used for leisure and tourism, but they are priced to encourage users to change bikes regularly. Also, for the purposes of this project, long trips are less likely to have
-
+              
+              % This is an arbitrary threshold. However, the CaBi system is primarily intended for short trips, and the pricing reflects this. The bikes can be used for leisure and tourism, but they are priced to encourage users to change bikes regularly. Also, for the purposes of this project, long trips are less likely to have
+              
         \item Starting and ending at the same station
-
-        % For obvious reasons, cannot easily be routed
-
+              
+              % For obvious reasons, cannot easily be routed
+              
         \item Stations with an invalid start or end station
-
-        % A number of trips in the dataset are missing a value for the start or ending point
+              
+              % A number of trips in the dataset are missing a value for the start or ending point
     \end{itemize}
-
-    As of May 2023 there are 35,231,413 trips. 175,603 are removed due to being too long
+    As of May 2023 there are 35,231,413 trips. 175,603 are longer than 4 hours and are removed. 
 \end{frame}
 
+\subsection{Find The number of trips between unique pairs of stations}
 \begin{frame}
     \frametitle{Find unique trips between two stations}
-    These 35,136,810 trips reduce to 183,959 unique trips if we consider A>B and B>A different trips.
-
-    
-
-    If we drop trips that start and end at the same dock, there are 183,214 unique trips. If we consider only the start and end stations, this further reduces to 105,636.
-
+    $$ 35,136,810 \text{ trips} \rightarrow 183,959 \text{ station combinations} $$
+    If we drop trips that start and end at the same dock, we are down to 183,214 trips.
+    \smallskip
+    If we consider only the start and end stations:
+    $$ 183,214 \rightarrow 105,636 $$
     \emph{These trips are the final ones to route}
 \end{frame}
 
 \begin{frame}
     \frametitle{Building a Valhalla Routing network}
-
     \begin{itemize}
         \item Download OSM tiles
         \item Build Valhalla routing network
@@ -145,43 +189,35 @@
 
 \begin{frame}
     \frametitle{Sum up the trips on every topological element}
-
     \begin{itemize}
         \item Using an SQL query, we can sum the trips on every unique street
     \end{itemize}
-
 \end{frame}
 
 \begin{frame}
     \frametitle{Results}
-
     
-
-    
-
 \end{frame}
+
 \section{Conclusions}
+
 \begin{frame}
     \frametitle{Lessons learned}
-
+    
     \begin{itemize}
         \item Routing is *much* faster if you run it locally as binaries rather than a web api from a container
         \item Valhalla allows a like of parameters for bike routing and is lightning fast
     \end{itemize}
-
-
-
 \end{frame}
+
 \section{notes and thanks}
+
 \begin{frame}
     \frametitle{Shoutouts}
-
     \begin{itemize}
         \item GIS-OPS for their thoughtful and intuitive Valhalla Docker containers
         \item
     \end{itemize}
-
-
-
 \end{frame}
+
 \end{document}
