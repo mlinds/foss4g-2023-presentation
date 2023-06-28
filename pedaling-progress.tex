@@ -35,7 +35,7 @@
         \item Originally from Washington, DC area
               % hence my obcession with DC bike infrastructure
         \item Background in Coastal Engineering
-        \item Currently work as a Geospatial Developer at Van Oord, In Rotterdam, The Netherlands
+        \item Currently work as a Geospatial Developer at Van~Oord, In Rotterdam, The Netherlands
     \end{itemize}
     \begin{center}
         \includegraphics[width=0.4\textwidth]{VO_logo.png}
@@ -141,7 +141,7 @@
         \item Aggregate the trip statistics across every single route
     \end{enumerate}
 \end{frame}
-
+\subsection{Data loading and cleaning}
 \begin{frame}
     \frametitle{Data cleaning and validation}
     For each trip, the trip time is calculated.
@@ -161,7 +161,7 @@
     \end{itemize}
     As of May 2023 there are 35,231,413 trips. 175,603 are longer than 4 hours and are removed.
 \end{frame}
-
+\subsection{Goal 1: How many unique trips}
 %\subsection{Find The number of trips between unique pairs of stations}
 \begin{frame}
     \frametitle{Find unique trips between station pairs}
@@ -183,15 +183,7 @@
     \frametitle{Results of trips between stations}
     \includegraphics[width=\textwidth]{./cabi_with_number_of_trips.png}
 \end{frame}
-\begin{frame}
-    \frametitle{Building a routing network from OSM data}
-    \begin{itemize}
-        \item Download the OSM data export from geoFabrik in protobuffer format
-        \item Trim and merge the protobuf OSM files
-        \item Let Valhalla Docker container build the routing tiles automatically 
-              % \item Use Pandas the start and end point of every unique trip
-    \end{itemize}
-\end{frame}
+\subsection{Goal 2: Routing the trips}
 \begin{frame}
     \frametitle{Routing these trips}
     \framesubtitle{Back to Goal 2}
@@ -202,6 +194,15 @@
 \end{frame}
 \begin{frame}
     \includegraphics[width=\textwidth,page=3]{graphics_document.pdf}
+\end{frame}
+\begin{frame}
+    \frametitle{Building a routing network from OSM data}
+    \begin{itemize}
+        \item Download the OSM data export from geoFabrik in protobuffer format
+        \item Trim and merge the protobuf OSM files
+        \item Let Valhalla Docker container build the routing tiles automatically 
+              % \item Use Pandas the start and end point of every unique trip
+    \end{itemize}
 \end{frame}
 \begin{frame}
     \frametitle{Bike Routing Considerations}
@@ -217,10 +218,10 @@
     \\
     Avoid the Valhalla HTTP API and use \emph{pyvalhalla} 
 \end{frame}
-
+\subsection{Goal 3: How to combine it all}
 \begin{frame}
     \frametitle{Back to Goal 3}
-    \framesubtitle{How to combine it all}
+    \framesubtitle{How many bikeshare trips by street}
 
     The challenge: \pause
     \\
