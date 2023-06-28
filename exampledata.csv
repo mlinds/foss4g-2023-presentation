@@ -1,0 +1,4 @@
+"ride_id","rideable_type","started_at","ended_at","start_station_name","start_station_id","end_station_name","end_station_id","start_lat","start_lng","end_lat","end_lng","member_casual"
+"5F3D280238A782FE","docked_bike","2023-05-12 18:57:59","2023-05-12 19:17:50","3rd & Tingey St SE","31634","8th & F St NE","31631",38.87501,-77.0024,38.897274,-76.994749,"casual"
+"97EC218DACB24849","classic_bike","2023-05-23 07:55:29","2023-05-23 08:11:12","Clarendon Blvd & Pierce St","31016","15th & L St NW","31276",38.893438,-77.076389,38.903649,-77.034918,"member"
+"31D19AC7BA317018","electric_bike","2023-05-05 17:27:10","2023-05-05 17:40:17","South Capitol St and Southern Ave SE","31830","Tanger Outlets","32415",38.821667433,-77.001627445,38.7968,-77.0026,"member"
