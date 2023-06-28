@@ -37,6 +37,9 @@
         \item Background in Coastal Engineering
         \item Currently work as a Geospatial Developer at Van Oord, In Rotterdam, The Netherlands
     \end{itemize}
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{VO_logo.png}
+    \end{center}
 \end{frame}
 
 % \subsection{What is Capital Bikeshare?}
@@ -54,7 +57,8 @@
             \item Docked bikeshare
                   % \item Memberships are available for \$95 a year for unlimited trips under 45 minutes \cite{cabisite}. Casual users can pay \$1 to unlock the bike, then \$0.05 per minute.
             \item Primarily intended for short trips
-            \item 700+ docking stations,$\sim$ 35 million trips (so far)
+            \item 700+ docking stations
+            \item $\approx$ 35 million trips (so far)
         \end{itemize}
 
     \end{columns}
@@ -184,6 +188,7 @@
     \begin{itemize}
         \item Download the OSM data export from geoFabrik in protobuffer format
         \item Trim and merge the protobuf OSM files
+        \item Let Valhalla Docker container build the routing tiles automatically 
               % \item Use Pandas the start and end point of every unique trip
     \end{itemize}
 \end{frame}
@@ -285,7 +290,7 @@
 
     Are the sums for any individual routes anywhere near accurate? \pause
     \\
-    \emph{Probably not}
+    \emph{Probably not?}
     % Probably not. However, I would speculate that the ratios \emph{between} streets are probably more representative.
 
     % The only validation data I know of (GPS Tracks collected during a study in 2016) are not public and I'm still working on getting access to them.
@@ -307,7 +312,7 @@
     \frametitle{What would I have done differently?}
 
     \begin{itemize}
-        \item more in SQL, less in Python
+        \item More in SQL, less in Python
         \item Python is perfect for being the "Glue" and interacting with the various parts
               % If I was starting from scratch, I would probably move a lot of the other logic to PostGIS, and use SQL queries and functions to do more of the data crunching
 
